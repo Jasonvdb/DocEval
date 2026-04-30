@@ -1,0 +1,125 @@
+# Generation tasks — model produces a legal document from instructions.
+# Each task has: id, kind, category, system, prompt.
+
+- id: gen-mutual-nda
+  kind: generation
+  category: confidentiality
+  system: |
+    You are an experienced commercial attorney drafting concise, enforceable contracts
+    for U.S. business clients. Use clear, modern legal English. Output only the document
+    itself with no preamble or commentary.
+  prompt: |
+    Draft a mutual non-disclosure agreement between Acme Robotics, Inc. (a Delaware
+    corporation) and Beacon Logistics LLC (a California limited liability company)
+    for the purpose of evaluating a potential commercial partnership in autonomous
+    warehouse equipment. Term: two years from the effective date. Governing law:
+    Delaware. Include standard exclusions (publicly known, independently developed,
+    lawfully received from a third party), permitted disclosures to advisors, and a
+    return-or-destroy provision on termination.
+
+- id: gen-employment-offer
+  kind: generation
+  category: employment
+  system: |
+    You are an experienced employment attorney drafting offer letters for U.S.
+    employers. Output only the letter itself.
+  prompt: |
+    Draft an offer letter from Northwind Systems, Inc. to Priya Raman for the role
+    of Senior Software Engineer based in Austin, Texas. Annual salary $185,000,
+    bi-weekly pay, 15,000 RSUs vesting over four years with a one-year cliff,
+    standard benefits, at-will employment, non-solicitation of employees and
+    customers for 12 months post-termination, mandatory arbitration of disputes
+    (with carve-outs for IP and injunctive relief), and assignment of inventions.
+    Include an offer expiration of seven days.
+
+- id: gen-msa-confidentiality-ip
+  kind: generation
+  category: contract
+  system: |
+    You are drafting clauses for a Master Services Agreement between a SaaS vendor
+    and an enterprise customer. Output only the requested clauses, numbered.
+  prompt: |
+    Draft the following two clauses for an MSA: (1) Confidentiality, including
+    a definition of Confidential Information, exclusions, permitted uses, return
+    obligations, and a five-year survival term; (2) Intellectual Property, where
+    the vendor owns its pre-existing and platform IP, the customer owns its data
+    and content, and any custom deliverables created for the customer are
+    assigned to the customer upon payment.
+
+- id: gen-lease-early-termination
+  kind: generation
+  category: real-estate
+  system: |
+    You are a real estate attorney drafting residential lease provisions for
+    California. Output only the addendum text.
+  prompt: |
+    Draft an early termination addendum to a 12-month residential lease in San
+    Francisco, California. The tenant may terminate early with 60 days written
+    notice and payment of two months rent as liquidated damages, with no penalty
+    if termination is due to military deployment (per SCRA), domestic violence
+    (per California Code of Civil Procedure 1161.3), or habitability issues
+    unresolved by the landlord within 30 days of written notice. Include a
+    signature block.
+
+- id: gen-privacy-cookies
+  kind: generation
+  category: privacy
+  system: |
+    You are a privacy attorney drafting U.S. consumer-facing privacy notices that
+    are accurate, plain-language, and CCPA/CPRA-aware. Output only the section.
+  prompt: |
+    Draft the "Cookies and Similar Technologies" section of a privacy notice for
+    Lumen Analytics, a B2B SaaS dashboard. Cover: types of cookies used (strictly
+    necessary, functional, analytics, advertising), purposes, third-party
+    providers (Google Analytics, Segment, HubSpot), the right of California
+    residents to opt out of "sharing" for cross-context behavioral advertising,
+    Global Privacy Control honoring, and how to manage preferences via the in-app
+    cookie banner.
+
+- id: gen-demand-letter
+  kind: generation
+  category: dispute
+  system: |
+    You are a commercial litigation attorney drafting professional demand letters
+    that preserve good faith but make consequences clear. Output only the letter.
+  prompt: |
+    Draft a demand letter from Riverstone Consulting Group to Apex Manufacturing
+    Co. for $84,500 in unpaid invoices (Invoice #2089 dated January 12, 2026
+    for $42,000; Invoice #2104 dated February 27, 2026 for $42,500), both 30+
+    days past due despite three prior reminders. Demand payment within 14 days
+    of the letter, reserve all rights including suit and recovery of attorneys'
+    fees per the parties' Master Services Agreement Section 9.3, and offer to
+    discuss a structured payment plan if requested in writing within seven days.
+
+- id: gen-contractor-agreement
+  kind: generation
+  category: contract
+  system: |
+    You are drafting an independent contractor agreement for a U.S. company
+    engaging a freelance designer. Output only the requested sections.
+  prompt: |
+    Draft these three sections of an independent contractor agreement between
+    Halcyon Studios LLC (Client) and Mira Okafor (Contractor): (1) Scope of
+    Services, referencing an attached Statement of Work and clarifying the
+    Contractor controls the means and manner of performance; (2) Payment Terms
+    of $12,500 per month, invoiced monthly, net 15, with no expense
+    reimbursement absent prior written approval; (3) Intellectual Property,
+    with full assignment to Client of all deliverables on a work-made-for-hire
+    basis with a backup assignment, Contractor retains rights to general tools
+    and methodologies pre-existing or developed independently.
+
+- id: gen-tos-liability-arbitration
+  kind: generation
+  category: contract
+  system: |
+    You are drafting consumer-facing Terms of Service clauses for a U.S. SaaS
+    app. Output only the requested clauses, numbered, with section headers.
+  prompt: |
+    Draft three clauses for the Terms of Service of Caldera, a paid mobile
+    journaling app: (1) Limitation of Liability — exclude consequential damages,
+    cap aggregate liability at the greater of fees paid in the prior 12 months
+    or $100, with carve-outs for gross negligence and willful misconduct;
+    (2) Governing Law and Venue — Delaware law, exclusive venue in state and
+    federal courts in New Castle County; (3) Arbitration and Class Waiver —
+    individual arbitration under AAA Consumer Rules, class action waiver, with
+    a 30-day opt-out right for new users.
