@@ -1,0 +1,132 @@
+# Editing tasks — model edits an existing legal document per instruction.
+# Each task has: id, kind, category, system, source (the original), prompt (instruction).
+
+- id: edit-simplify-arbitration
+  kind: editing
+  category: revision
+  system: |
+    You are revising legal text for clarity and enforceability. Preserve all
+    legal substance unless the instruction directs otherwise. Output only the
+    revised clause.
+  source: |
+    ARBITRATION. Any controversy, claim, or dispute arising out of or relating
+    to this Agreement, or the breach, termination, enforcement, interpretation,
+    or validity thereof, including the determination of the scope or
+    applicability of this agreement to arbitrate, shall be determined
+    exclusively by arbitration administered by the American Arbitration
+    Association in accordance with its Commercial Arbitration Rules then in
+    effect, and judgment on the award rendered by the arbitrator(s) may be
+    entered in any court having jurisdiction thereof. The parties hereby
+    irrevocably waive any and all rights they may have to a trial by jury in
+    any action, proceeding, claim, or counterclaim, whether at law or in
+    equity, brought by either of the parties hereto.
+  prompt: |
+    Rewrite this arbitration clause in plain English suitable for a consumer
+    mobile app's Terms of Service. Keep all legal effect (mandatory
+    arbitration, AAA, jury trial waiver) but use short sentences and everyday
+    words. Aim for sixth-to-eighth-grade reading level.
+
+- id: edit-add-jurisdiction
+  kind: editing
+  category: revision
+  system: |
+    You are revising contract text. Output only the full revised clause set,
+    preserving the original ordering of unchanged clauses.
+  source: |
+    13. NOTICES. All notices required or permitted under this Agreement shall
+    be in writing and shall be delivered by hand, by certified mail (return
+    receipt requested), or by nationally recognized overnight courier to the
+    addresses set forth on the signature page. Notice shall be deemed given
+    upon receipt.
+
+    14. ASSIGNMENT. Neither party may assign this Agreement, in whole or in
+    part, without the prior written consent of the other party, which consent
+    shall not be unreasonably withheld; provided, however, that either party
+    may assign this Agreement without consent in connection with a merger,
+    acquisition, or sale of substantially all of its assets.
+
+    15. ENTIRE AGREEMENT. This Agreement constitutes the entire agreement
+    between the parties with respect to the subject matter hereof and
+    supersedes all prior or contemporaneous agreements, whether written or
+    oral.
+  prompt: |
+    Insert a new "Governing Law and Venue" clause as Section 14, choosing
+    Delaware law and exclusive venue in the state and federal courts of New
+    Castle County, Delaware, with both parties consenting to personal
+    jurisdiction there. Renumber the subsequent clauses. Do not modify the
+    other clauses.
+
+- id: edit-tighten-warranty
+  kind: editing
+  category: revision
+  system: |
+    You are revising contract language for precision. Output only the revised
+    clause.
+  source: |
+    WARRANTIES. The Company warrants that the Services will generally perform
+    in a manner consistent with industry standards. The Company makes no other
+    warranties, express or implied, and specifically disclaims any implied
+    warranty of merchantability or fitness for a particular purpose. The
+    Company does not warrant that the Services will be uninterrupted or
+    error-free.
+  prompt: |
+    Tighten this warranty clause. The phrase "generally perform in a manner
+    consistent with industry standards" is too vague. Replace it with a
+    concrete service-level commitment: the Services will materially conform to
+    the documentation provided to Customer for a remedy period of 30 days
+    after delivery, with the Customer's sole remedy being re-performance or,
+    if re-performance fails, a pro-rata refund of fees paid for the affected
+    Services. Keep the disclaimer of implied warranties and the no-uptime
+    promise. Do not add new disclaimers beyond what's needed.
+
+- id: edit-modernize-boilerplate
+  kind: editing
+  category: revision
+  system: |
+    You are modernizing archaic legal English. Preserve the legal effect
+    exactly. Output only the revised text.
+  source: |
+    NOW, THEREFORE, in consideration of the mutual covenants and agreements
+    hereinafter set forth and for other good and valuable consideration, the
+    receipt and sufficiency of which are hereby acknowledged, the parties
+    hereto, intending to be legally bound, do hereby covenant and agree as
+    follows:
+
+    WITNESSETH: That whereas the parties are desirous of entering into an
+    agreement whereby the Vendor shall furnish to the Customer certain goods
+    as more particularly described in Exhibit A annexed hereto and made a
+    part hereof;
+
+    NOW THEREFORE, the parties hereunto agree as set forth herein.
+  prompt: |
+    Rewrite this preamble using plain modern English. Remove witnesseth,
+    hereunto, hereinbefore-style archaisms. Keep the legal effect: a
+    statement of mutual consideration and intent to be bound, and a
+    recital that the Vendor will supply goods listed in Exhibit A. Aim for
+    one short paragraph plus a one-sentence recital.
+
+- id: edit-mutual-indemnity
+  kind: editing
+  category: revision
+  system: |
+    You are revising indemnity provisions. Output only the revised clause.
+  source: |
+    INDEMNIFICATION. Customer shall indemnify, defend, and hold harmless
+    Provider, its affiliates, and their respective officers, directors,
+    employees, and agents from and against any and all claims, damages,
+    losses, liabilities, costs, and expenses (including reasonable attorneys'
+    fees) arising out of or relating to (a) Customer's use of the Services in
+    breach of this Agreement; (b) any content uploaded or transmitted by
+    Customer; or (c) Customer's negligence or willful misconduct. Provider
+    shall have no indemnification obligations under this Agreement.
+  prompt: |
+    Make this indemnification clause mutual. Add a Provider indemnification
+    obligation covering: (a) third-party claims that the Services as
+    delivered infringe a U.S. patent, copyright, or trademark, with standard
+    carve-outs (modifications by Customer, combination with non-Provider
+    products, use outside the documentation); and (b) Provider's gross
+    negligence or willful misconduct. Include standard procedural
+    requirements (prompt notice, sole control of defense by indemnifying
+    party, reasonable cooperation, no settlement admitting liability of the
+    indemnified party without consent). Keep the existing Customer
+    indemnification obligations intact.
