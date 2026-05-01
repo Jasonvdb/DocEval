@@ -60,18 +60,24 @@ def _approx_tokens(text: str) -> int:
 def run(
     models: str = typer.Option(None, help="Comma-separated model names. Default: all available."),
     kinds: str = typer.Option(None, help="Comma-separated task kinds: generation,editing."),
+    tasks: str = typer.Option(None, help="Comma-separated task ids. Default: all in selected kinds."),
+    exclude_providers: str = typer.Option(None, "--exclude-providers", help="Comma-separated providers to skip: anthropic,openai,google."),
     trials: int = typer.Option(3, help="Trials per (task, model). Higher = lower variance, higher cost."),
     yes: bool = typer.Option(False, "--yes", "-y", help="Skip confirmation prompt."),
 ) -> None:
     """Run a full evaluation: generate, judge, score, report."""
     kind_list = _parse_kinds(kinds)
-    selected = available_models(_parse_csv(models))
+    excluded = set(_parse_csv(exclude_providers) or [])
+    selected = [m for m in available_models(_parse_csv(models)) if m.provider not in excluded]
     skipped = skipped_providers()
+    task_filter = _parse_csv(tasks)
 
     if skipped:
         console.print(
             f"[yellow]Skipping providers without API keys: {', '.join(skipped)}[/yellow]"
         )
+    if excluded:
+        console.print(f"[yellow]Excluding providers (--exclude-providers): {', '.join(sorted(excluded))}[/yellow]")
     if len(selected) < 2:
         console.print(
             "[red]Need at least 2 models with valid API keys to run a tournament.[/red]"
@@ -82,6 +88,13 @@ def run(
         raise typer.Exit(1)
 
     tasks = load_tasks(kind_list)
+    if task_filter:
+        wanted = set(task_filter)
+        unknown = wanted - {t.id for t in tasks}
+        if unknown:
+            console.print(f"[red]Unknown task id(s): {sorted(unknown)}[/red]")
+            raise typer.Exit(1)
+        tasks = [t for t in tasks if t.id in wanted]
     if not tasks:
         console.print("[red]No tasks loaded.[/red]")
         raise typer.Exit(1)
@@ -180,15 +193,26 @@ def report(run_id: str = typer.Argument(..., help="Run id (e.g. 20260430-184530)
 def cost_estimate(
     models: str = typer.Option(None, help="Comma-separated model names."),
     kinds: str = typer.Option(None, help="Comma-separated task kinds."),
+    tasks: str = typer.Option(None, help="Comma-separated task ids."),
+    exclude_providers: str = typer.Option(None, "--exclude-providers", help="Comma-separated providers to skip: anthropic,openai,google."),
     trials: int = typer.Option(3, help="Trials per (task, model)."),
 ) -> None:
     """Approximate $ cost of a run without making API calls. Useful before launching big runs."""
     kind_list = _parse_kinds(kinds)
-    selected = available_models(_parse_csv(models))
+    excluded = set(_parse_csv(exclude_providers) or [])
+    selected = [m for m in available_models(_parse_csv(models)) if m.provider not in excluded]
     if len(selected) < 2:
         console.print("[red]Need at least 2 models with valid API keys.[/red]")
         raise typer.Exit(1)
+    task_filter = _parse_csv(tasks)
     tasks = load_tasks(kind_list)
+    if task_filter:
+        wanted = set(task_filter)
+        unknown = wanted - {t.id for t in tasks}
+        if unknown:
+            console.print(f"[red]Unknown task id(s): {sorted(unknown)}[/red]")
+            raise typer.Exit(1)
+        tasks = [t for t in tasks if t.id in wanted]
 
     # Approx output sizes (heuristic)
     AVG_GEN_OUTPUT_TOKENS = min(MAX_OUTPUT_TOKENS, 800)

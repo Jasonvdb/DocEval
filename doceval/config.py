@@ -47,20 +47,6 @@ MODEL_REGISTRY: list[ModelSpec] = [
     ),
     # OpenAI
     ModelSpec(
-        name="gpt-5.5",
-        provider="openai",
-        input_price_per_mtok=5.0,
-        output_price_per_mtok=30.0,
-        context_window=1_000_000,
-    ),
-    ModelSpec(
-        name="gpt-5.5-pro",
-        provider="openai",
-        input_price_per_mtok=30.0,
-        output_price_per_mtok=180.0,
-        context_window=1_000_000,
-    ),
-    ModelSpec(
         name="gpt-5.4-mini",
         provider="openai",
         input_price_per_mtok=0.75,
@@ -74,23 +60,30 @@ MODEL_REGISTRY: list[ModelSpec] = [
         output_price_per_mtok=1.25,
         context_window=400_000,
     ),
+    ModelSpec(
+        name="gpt-4.1",
+        provider="openai",
+        input_price_per_mtok=2.0,
+        output_price_per_mtok=8.0,
+        context_window=1_000_000,
+    ),
     # Google
     ModelSpec(
-        name="gemini-3.1-pro",
+        name="gemini-3.1-pro-preview",
         provider="google",
         input_price_per_mtok=2.0,
         output_price_per_mtok=12.0,
         context_window=1_000_000,
     ),
     ModelSpec(
-        name="gemini-3-flash",
+        name="gemini-3-flash-preview",
         provider="google",
         input_price_per_mtok=0.50,
         output_price_per_mtok=3.0,
         context_window=1_000_000,
     ),
     ModelSpec(
-        name="gemini-3.1-flash-lite",
+        name="gemini-3.1-flash-lite-preview",
         provider="google",
         input_price_per_mtok=0.25,
         output_price_per_mtok=1.50,
